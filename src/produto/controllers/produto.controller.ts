@@ -42,12 +42,11 @@ export class ProdutoController {
     delete(@Param('id', ParseIntPipe) id: number) {  // Atravees do decorador Param deve ser convertido de string para numero  e reconhecer a variavel de caminho, para fazer este conhecimento da url que deve ser inserido na variavel.
         return this.produtoService.delete(id);
     }
-        @Get('/maior/:maior')//colocamos assim('/nome/:nome') para nao confundir com o id na hora da busca.  Estamos definindo que o nome é uma variavel e ele que vamos buscar na linha 31
-        @HttpCode(HttpStatus.OK) // Http status 200, ele retorna isso se estiver tudo certo.
+        @Get('/preco-maior/:preco')
         findByPrecoMaior(@Param('preco',ParseFloatPipe) preco: number): Promise < Produto[] > {
             return this.produtoService.findByPrecoMaior(preco);
         }
-        @Get('/menor/:menor')//colocamos assim('/nome/:nome') para nao confundir com o id na hora da busca.  Estamos definindo que o nome é uma variavel e ele que vamos buscar na linha 31
+        @Get('/preco-menor/:preco')
         @HttpCode(HttpStatus.OK) // Http status 200, ele retorna isso se estiver tudo certo.
         findByPrecoMenor(@Param('preco',ParseFloatPipe) preco: number): Promise < Produto[] > {
             return this.produtoService.findByPrecoMenor(preco);

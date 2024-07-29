@@ -39,7 +39,6 @@ export class ProdutoService {
             throw new HttpException('O Produto não foi encontrada!', HttpStatus.NOT_FOUND);
 
         return buscaProduto;
-
     }
 
     async findByTitulo(nome: string): Promise<Produto[]> { // o colchete indica que pode ser que traga mais de um nome, serve para mostrar os que puxarem.
@@ -76,31 +75,37 @@ export class ProdutoService {
             throw new HttpException('A Produto não foi encontrada!', HttpStatus.NOT_FOUND)
         // a diferenca do criar para o atualizar é que no criar nao passsa o id e aqui no atuhalizar passa, este metodo atualiza o objeto inteiro.
 
-        // se o usuario indicou
-        if (produto.categoria) { // aqui abaixo foi criado o id do categoria, verificando se existe por isso tem o if.
-
-            await this.categoriaService.findById(produto.categoria.id)// isso e para verificar se enontrou o categoria
+        if (produto.categoria) {
+            await this.categoriaService.findById(produto.categoria.id)
 
             return await this.produtoRepository.save(produto);
         }
 
-        // se o usuariio nao indicou o categoria
+
         return await this.produtoRepository.save(produto);
     }
 
     async delete(id: number): Promise<DeleteResult> {
-        // estamos fazendo o metodo para deletar apenas uma ocorrencia no banco de dados.
+
 
         await this.findById(id)
 
         return await this.produtoRepository.delete(id);
 
     }
-    
-    async findByPrecoMaior(preco: number): Promise<Produto[]> {
-        return await this.produtoRepository.findBy({preco: MoreThan(preco)});
-      }
-      async findByPrecoMenor(preco: number): Promise<Produto[]> {
-        return await this.produtoRepository.findBy({preco: LessThan(preco)});
-      }
+
+    async findByPrecoMaior(valor: number): Promise<Produto[]> {
+        return await this.produtoRepository.find({
+            where: { preco: MoreThan(valor) },
+            order: { preco: 'ASC' },
+            relations: { categoria: true },
+        });
+    }
+    async findByPrecoMenor(valor: number): Promise<Produto[]> {
+        return await this.produtoRepository.find({
+            where: {preco: LessThan(valor)},
+            order: {preco: 'DESC' },
+            relations: { categoria: true },
+        });
+    }
 }
