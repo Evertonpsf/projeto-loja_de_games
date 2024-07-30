@@ -26,19 +26,14 @@ export class CategoriaService {
 
 
         let buscaCategoria = await this.categoriaRepository.findOne({// aqui estamos buscando uma postagem, por id por isso passamos o id
-            where: {
-                id
-            },
-            relations:{
-                produto: true
-            }
+            where: {id},
+            relations:{ produto: true}
         })
 
         if (!buscaCategoria)
             throw new HttpException('A Categoria nao foi encontrado!', HttpStatus.NOT_FOUND);
 
         return buscaCategoria;
-
     }
 
     async findByDescricao(descricao: string): Promise<Categoria[]> { // o colchete indica que pode ser que traga mais de um titulo, serve para mostrar os que puxarem.
@@ -48,11 +43,8 @@ export class CategoriaService {
             where: {
                 descricao: ILike(`%${descricao}%`) // usamos o ILike pois é insensitivo, assim busca a descricao independente da forma que esteja escrito, em maisculo ou minusculo.
             },
-            relations:{
-             //   produto: true
-            }
+            relations:{produto: true}
         })
-
     }
     async create(categoria: Categoria): Promise<Categoria> { // aqui estamos criando o metodo de categoria, para fazer um categoria
         return await this.categoriaRepository.save(categoria);

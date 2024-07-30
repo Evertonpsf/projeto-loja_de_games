@@ -25,12 +25,12 @@ export class Produto {
     @Column()
     foto: string;
 
-    // este lado é o muitos para um, ou seja, muitas postagens possui um categoria.
+    
     @ManyToOne(() => Categoria, (categoria) => categoria.produto, {
         onDelete: "CASCADE" // so tem esse delete aqui por que aqui é a classe filha, ela que tem que ser deletada e nao a principal
     })
 
-    categoria: Categoria; // essa relacao é do tipo asssociacao, o objeto da classe categoria na classe postagem
+    categoria: Categoria; // essa relacao é do tipo asssociacao, o objeto da classe categoria na classe produto
 
   
 }
