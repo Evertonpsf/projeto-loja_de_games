@@ -67,7 +67,7 @@ export class CategoriaService {
         let buscaCategoria = await this.findById(id)
 
         if (!buscaCategoria)
-            throw new HttpException('O Categoria não foi encontrada!', HttpStatus.NOT_FOUND);
+            throw new HttpException('A Categoria não foi encontrada!', HttpStatus.NOT_FOUND);
         return await this.categoriaRepository.delete(id);
 
     }
