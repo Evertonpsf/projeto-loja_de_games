@@ -4,6 +4,9 @@ import { Categoria } from './categoria/entities/categoria.entity';
 import { Produto } from './produto/entities/produto.entity';
 import { CategoriaModules } from './categoria/categoria.module';
 import { ProdutoModules } from './produto/produto.module';
+import { AuthModule } from './auth/auth.module';
+import { Usuario } from './usuario/entities/usuario.entity';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -15,14 +18,16 @@ import { ProdutoModules } from './produto/produto.module';
     username: 'root',
     password: 'root',
     database: 'db_lojadegames',
-    entities: [Categoria, Produto ],
+    entities: [Categoria, Produto, Usuario ],
     synchronize: true,
     logging: true,
     bigNumberStrings: false,
 
   }),
   CategoriaModules,
-  ProdutoModules
+  ProdutoModules,
+  AuthModule,
+  UsuarioModule
   ],
   controllers: [],
   providers: [],

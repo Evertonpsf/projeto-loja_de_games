@@ -17,7 +17,9 @@ export class ProdutoService {
 
     async findAll(): Promise<Produto[]> {
         return await this.produtoRepository.find({
-            relations: { categoria: true } // tem que fazer isso para quando buscar as postagens exibir o categoria que esta relacionado
+            relations: { categoria: true,
+                usuario: true
+             } // tem que fazer isso para quando buscar as postagens exibir o categoria que esta relacionado
         });
     }
 
@@ -26,7 +28,9 @@ export class ProdutoService {
 
         let buscaProduto = await this.produtoRepository.findOne({// aqui estamos buscando uma produto, por id por isso passamos o id
             where: { id },
-            relations: { categoria: true }
+            relations: { categoria: true,
+                usuario: true
+             }
         })
 
         if (!buscaProduto)
@@ -42,7 +46,9 @@ export class ProdutoService {
             where: {
                 nome: ILike(`%${nome}%`)
             },
-            relations: { categoria: true }
+            relations: { categoria: true,
+                usuario: true
+             }
         })
 
     }
